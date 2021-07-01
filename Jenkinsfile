@@ -21,7 +21,7 @@ agent any
             {
                 steps{
                     sh 'mvn package'
-                    sshagent(['tomcat']) {
+                    sshagent(['tomcatidnew']) {
                         sh """
                         scp -o StrictHostKeyChecking=no **/*.war  ubuntu@172.31.19.206:/opt/tomcat/apache-tomcat-9.0.48/webapps
                         """
