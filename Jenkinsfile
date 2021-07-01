@@ -3,13 +3,22 @@ pipeline {
 
     stages{
         stage('Cleaning the code'){
-            sh 'mvn clean'
+            steps{
+             sh 'mvn clean'
+            }
+           
         }
            stage('Testing the code'){
-            sh 'mvn test'
+               steps{
+                sh 'mvn test'
+               }
+            
         }
           stage('Building package the code'){
-            sh 'mvn package'
+              steps{
+                  sh 'mvn package'
+              }
+           
         }
     }
 
