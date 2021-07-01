@@ -17,16 +17,6 @@ agent any
                     sh 'mvn test'
                 }
             }
-            stage('deploy to tomcat')
-            {
-                steps{
-                    sh 'mvn package'
-                    sshagent(['tomcat']) { . // get this from pipeline script using sshAgent plugins 
-                        sh """
-                        scp -o StrictHostKeyChecking=no **/*.war  ubuntu@172.31.19.206:/opt/tomcat/apache-tomcat-9.0.48/webapps
-                        """
-                    }
-                }
-            }
+         
     }
 }
