@@ -1,41 +1,32 @@
 pipeline {
-    agent any
+
+agent any
+
     stages{
 
-       stage('Cleaning the code'){
-            steps{
-             sh 'mvn clean'
+            stage('clean the code ')
+            {
+                steps{
+                    sh 'mvn clean'
+                }
             }
-           
-        }
-        stage('Testing the code'){
-               steps{
-                sh 'mvn test'
-               }
-            
-        }
 
-             stage('Building package the code'){
-              steps{
-                  sh 'mvn package'
-              }
-           
-        }
-
-         stage(){
-
-              steps{
-                  sshagent(['tomcatidnew']) {
-             sh """
+            stage('unit testing')
+            {
+                steps{
+                    sh 'mvn test'
+                }
+            }
+            stage('deploy to tomcat')
+            {
+                steps{
+                    sh 'mvn package'
+                    sshagent(['tomcat']) { . // get this from pipeline script using sshAgent plugins 
+                        sh """
                         scp -o StrictHostKeyChecking=no **/*.war  ubuntu@172.31.19.206:/opt/tomcat/apache-tomcat-9.0.48/webapps
-            """
+                        """
+                    }
+                }
             }
-              }
-
-         }
-
-
-
     }
-
 }
